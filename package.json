@@ -1,0 +1,26 @@
+{
+  "name": "orangehrm-automation-using-playwright-typescript",
+  "version": "1.0.0",
+  "description": "Automate the OrangeHRM using Playwright Typescript",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shihab173066/OrangeHRM-Automation-using-Playwright-Typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shihab173066/OrangeHRM-Automation-using-Playwright-Typescript/issues"
+  },
+  "homepage": "https://github.com/shihab173066/OrangeHRM-Automation-using-Playwright-Typescript#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
