@@ -3,6 +3,7 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { loginLocators } from './locators/loginLocators';
 import { EnvUtils } from '../utils/EnvUtils';
+import { AppRoutes } from '../utils/appRoutes';
 
 export class LoginPage extends BasePage {
     
@@ -31,7 +32,7 @@ export class LoginPage extends BasePage {
 
     async verifySuccessfulLogin() {
         // We use a regex here so it dynamically passes regardless of the base domain
-        await expect(this.page).toHaveURL(/.*dashboard\/index/);
+        await expect(this.page).toHaveURL(AppRoutes.dashboard);
         await expect(this.page.locator(loginLocators.dashboardHeader)).toBeVisible();
         await expect(this.page.locator(loginLocators.userDropdown)).toBeVisible();
     }
