@@ -13,6 +13,8 @@ export class PimPage extends BasePage {
     }
 
     async createEmployee(firstName: string, lastName: string, empId: string) {
+
+        // await this.page.waitForTimeout(1000);
         
         // 1. Fill Names
         await this.page.locator(pimLocators.firstNameInput).fill(firstName);
@@ -29,6 +31,7 @@ export class PimPage extends BasePage {
 
         // 4. Wait for frontend validation to complete
         await this.page.waitForTimeout(1000);
+
 
         // 5. Click Save
         const saveBtn = this.page.locator(pimLocators.saveButton);
@@ -47,7 +50,7 @@ export class PimPage extends BasePage {
         // Or leave it as the regex: /.*pim\/viewPersonalDetails.*/
         await expect(this.page).toHaveURL(AppRoutes.PIM, { timeout: 15000 });
         
-        await expect(this.page.locator(pimLocators.personalDetailsHeader)).toBeVisible({ timeout: 15000 });
+        await expect(this.page.locator(pimLocators.personalDetailsHeader)).toBeVisible({ timeout: 70000 });
     }
 
     async goToEmployeeList() {

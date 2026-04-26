@@ -1,5 +1,6 @@
 // tests/searchEmployee.spec.ts
 import { test } from '../fixtures/testBase';
+import employeeData from '../test-data/employees.json';
 
 test.describe('PIM Module - Employee Search', () => {
 
@@ -11,33 +12,28 @@ test.describe('PIM Module - Employee Search', () => {
         await loginPage.verifySuccessfulLogin();
     });
 
-    test('TC_E2E_003: Search & Verify Employee', async ({ dashboardPage, pimPage }) => {
+    // LOOP OVER THE JSON DATA: Playwright will run this test block for every item in the JSON file
+    for (const data of employeeData) {
         
-        // --- DYNAMIC TEST DATA SETUP ---
-        const firstName = 'Automation';
-        const lastName = 'SearchUser';
-        const dynamicEmpId = `SRCH-${Math.floor(Math.random() * 9000) + 1000}`;
+        // Dynamically name the test in the report so you know which data set ran
+        test(`TC_E2E_003: Search & Verify Employee - ${data.scenario}`, async ({ dashboardPage, pimPage }) => {
 
-        // --- PRE-CONDITION: Create the employee so we have guaranteed data to search ---
-        console.log(`---> Setting up data: Creating employee ${dynamicEmpId}`);
-        await dashboardPage.navigateToPIM();
-        await pimPage.goToAddEmployee();
-        await pimPage.createEmployee(firstName, lastName, dynamicEmpId);
-        await pimPage.verifyEmployeeCreatedSuccessfully();
+            console.log(`---> Testing with Data: ${data.firstName} ${data.lastName} (ID: ${data.dynamicEmpId})`);
 
-        // --- TEST STEPS: Search Flow ---
-        console.log('---> Executing Search test steps...');
-        
-        // Step 1: Navigate to PIM > Employee List
-        await pimPage.goToEmployeeList();
+            // --- PRE-CONDITION ---
+            await dashboardPage.navigateToPIM();
+            await pimPage.goToAddEmployee();
+            // Pass the data directly from the JSON iteration
+            await pimPage.createEmployee(data.firstName, data.lastName, data.dynamicEmpId);
+            await pimPage.verifyEmployeeCreatedSuccessfully();
 
-        // Step 2 & 3: Enter Employee ID and Click Search
-        // Note: Searching by ID is the most foolproof method for a 1:1 exact match assertion
-        await pimPage.searchEmployeeById(dynamicEmpId);
+            // --- TEST STEPS ---
+            await pimPage.goToEmployeeList();
+            await pimPage.searchEmployeeById(data.dynamicEmpId);
 
-        // --- EXPECTED RESULT ---
-        console.log('---> Verifying search results grid...');
-        await pimPage.verifySearchResults(firstName, lastName, dynamicEmpId);
-    });
+            // --- EXPECTED RESULT ---
+            await pimPage.verifySearchResults(data.firstName, data.lastName, data.dynamicEmpId);
+        });
+    }
 
 });
