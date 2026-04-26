@@ -2,6 +2,7 @@
 
 export const AppRoutes = {
 
-    dashboard: /.*dashboard\/index/
+    dashboard: /.*dashboard\/index/ ,
+    PIM: /.*pim\/viewPersonalDetails.*/
     
 };

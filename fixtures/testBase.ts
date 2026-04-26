@@ -1,18 +1,25 @@
 // fixtures/testBase.ts
 import { test as baseTest } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { DashboardPage } from '../pages/DashboardPage';
+import { PimPage } from '../pages/PimPage';
 
-// Declare the types of your fixtures
 type MyFixtures = {
     loginPage: LoginPage;
+    dashboardPage: DashboardPage;
+    pimPage: PimPage;
 };
 
-// Extend base test to include your custom page objects
 export const test = baseTest.extend<MyFixtures>({
     loginPage: async ({ page }, use) => {
-        // Instantiate once and inject into tests
-        const loginPage = new LoginPage(page);
-        await use(loginPage);
+        await use(new LoginPage(page));
+    },
+    // Add the new pages to the fixture
+    dashboardPage: async ({ page }, use) => {
+        await use(new DashboardPage(page));
+    },
+    pimPage: async ({ page }, use) => {
+        await use(new PimPage(page));
     },
 });
 
